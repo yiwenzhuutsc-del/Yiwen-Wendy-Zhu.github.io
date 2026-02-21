@@ -1,0 +1,73 @@
+    
+.firefly {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index:1145141919810;
+    width: 0.5vw;
+    height: 0.5vw;
+    margin: -0.2vw 0 0 9.8vw;
+    pointer-events: none;
+    /* The movement animation uses a duration set by a CSS variable */
+    animation: move var(--move-duration, 200s) alternate infinite ease;}
+  
+  /* Pseudo-elements for glow and flash */
+.firefly::before,
+.firefly::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transform-origin: -10vw;
+}
+.firefly::before {
+    background: rgba(53, 60, 73, 0.555);
+    opacity: 0.4;
+    /* Rotation “drift” – duration randomized per firefly via JS */
+    animation: drift var(--rotation-speed, 10s) ease alternate infinite;
+  }
+  
+.firefly::after {
+    background: white;
+    opacity: 0;
+    box-shadow: 0 0 0vw 0vw yellow;
+    /* Two animations: drift (to match the before) and flash */
+    animation: drift var(--rotation-speed, 10s) ease alternate infinite,
+               flash var(--flash-duration, 7s) ease infinite;
+    /* Flash delay is randomized */
+    animation-delay: 0s, var(--flash-delay, 1s);
+  }
+  
+  /* The movement animation uses CSS variables for start/end positions and scale */
+@keyframes move {
+    0% {
+      transform: translateX(var(--start-x, 0))
+                 translateY(var(--start-y, 0))
+                 scale(var(--start-scale, 1));
+    }
+    100% {
+      transform: translateX(var(--end-x, 0))
+                 translateY(var(--end-y, 0))
+                 scale(var(--end-scale, 1));
+    }
+  }
+  
+  /* Simple continuous rotation (“drift”) */
+@keyframes drift {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Flash keyframes for the yellow glow effect */
+@keyframes flash {
+    0%, 30%, 100% {
+      opacity: 0;
+      box-shadow: 0 0 0vw 0vw yellow;
+    }
+    5% {
+      opacity: 1;
+      box-shadow: 0 0 2vw 0.4vw yellow;
+    }
+  }
+

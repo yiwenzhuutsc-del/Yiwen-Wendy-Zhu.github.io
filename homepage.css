@@ -1,0 +1,338 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins',sans-serif;
+}
+body {
+    background: linear-gradient(-45deg, white,#ee7752, #8f0c75,rgb(76, 76, 225));
+    background-size: 400% 400%;
+    animation: gradient 6s ease infinite;
+    height: 100vh;
+}
+
+body{
+	font-family: 'Roboto', sans-serif;
+}
+* {
+	margin: 0;
+	padding: 0;
+}
+i {
+	margin-right: 10px;
+}
+.text-content{
+    position: absolute;
+    top: 60%;
+    left: 7%;
+    z-index: 12;
+  }
+ .text-content .text{
+    font-size: 27px;
+    font-weight:bolder;
+    color: #2c3350;
+    transform:translateX(220px) translateY(-160px);
+  }
+  .text-content .name{
+  color: #2c3350;
+   font-size: 75px;
+   font-weight: 600;
+   margin: -20px 0 0 -3px;
+   text-shadow:2px 2px 4px rgba(255, 255, 255, 0.5);
+   transform:translateX(220px) translateY(-120px);
+  }
+  .text-content .job{
+   color: #2c3350;
+   font-size: 40px;
+   margin: 5px 0;
+   margin-top: -4px;
+   display: flex;
+   transform:translateX(0px) translateY(-150px);
+  }
+  .text-content .typing-text{
+    margin-left: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 4px solid #1de2d1;
+    animation: typing 5s steps(15) infinite;
+  }
+  @keyframes typing{
+    0%{
+      width: 0ch;
+    }
+    50%{
+      width: 30ch;
+    }
+    100%{
+      width: 38ch;
+    }
+  }
+  
+  .text-content .job .one{
+    color: #1de2d1;
+  }
+  .text-content .job .two{
+    color: #1de2d1;
+  }
+  .buttons{
+    margin: 20px 0 0 50px;
+    transform:translateY(-300px) translateX(-65px);
+  }
+  .text-content .buttons button{
+    outline: none;
+    margin: 0 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    color: #fff;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-image: linear-gradient( 135deg, #2AFADF     10%, #C346C2 100%);
+  }
+  .buttons button:hover{
+    transform: scale(0.97);
+  }
+  
+  header .media-icons{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 40px;
+    bottom: 40px;
+  }
+  .media-icons a{
+   margin-top: 8px;
+   font-size: 20px;
+   font-weight: 500;
+   text-decoration: none;
+   opacity: 0.7;
+   color: #2c3350;
+   transition: all 0.3s ease;
+  }
+  .media-icons a:hover{
+   opacity: 1;
+  }
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+ 
+    50% {
+        background-position: 100% 50%;
+    }
+ 
+    100% {
+        background-position: 0% 50%;
+    }
+}
+body{
+	font-family: 'Roboto', sans-serif;
+}
+* {
+	margin: 0;
+	padding: 0;
+}
+i {
+	margin-right: 10px;
+}
+/*----------bootstrap-navbar-css------------*/
+.navbar-logo{
+	padding: 15px;
+	color: #fff;
+}
+.navbar-mainbg{
+	background-color: #1d2542;
+	padding: 0px;
+    opacity:0.8;
+    position:sticky;
+}
+#navbarSupportedContent{
+	overflow: hidden;
+	position: relative;
+}
+#navbarSupportedContent ul{
+	padding: 0px;
+	margin: 0px;
+}
+#navbarSupportedContent ul li a i{
+	margin-right: 10px;
+}
+#navbarSupportedContent li {
+	list-style-type: none;
+	float: left;
+}
+#navbarSupportedContent ul li a{
+	color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+    padding: 20px 20px;
+    transition-duration:0.6s;
+	transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    position: relative;
+}
+#navbarSupportedContent>ul>li.active>a{
+	color: white;
+	background-color: transparent;
+	transition: all 0.7s;
+}
+#navbarSupportedContent a:not(:only-child):after {
+	content: "\f105";
+	position: absolute;
+	right: 20px;
+	top: 10px;
+	font-size: 14px;
+	font-family: "Font Awesome 5 Free";
+	display: inline-block;
+	padding-right: 3px;
+	vertical-align: middle;
+	font-weight: 900;
+	transition: 0.5s;
+}
+#navbarSupportedContent .active>a:not(:only-child):after {
+	transform: rotate(90deg);
+}
+.hori-selector{
+	display:inline-block;
+	position:absolute;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+	transition-duration:0.6s;
+	transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+	background-color: #41465d;
+	border-top-left-radius: 50px;
+	border-top-right-radius: 10px;
+	margin-top: 0px;
+}
+.hori-selector .right,
+.hori-selector .left{
+	position: absolute;
+	width: 25px;
+	height: 25px;
+	background-color: #1d2542;
+	bottom: 10px;
+}
+.hori-selector .right{
+	right: -25px;
+}
+.hori-selector .left{
+	left: -25px;
+}
+.hori-selector .right:before,
+.hori-selector .left:before{
+	content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #1d2542;
+}
+.hori-selector .right:before{
+	bottom: 0;
+    right: -25px;
+}
+.hori-selector .left:before{
+	bottom: 0;
+    left: -25px;
+}
+
+
+@media(min-width: 992px){
+	.navbar-expand-custom {
+	    -ms-flex-flow: row nowrap;
+	    flex-flow: row nowrap;
+	    -ms-flex-pack: start;
+	    justify-content: flex-start;
+	}
+	.navbar-expand-custom .navbar-nav {
+	    -ms-flex-direction: row;
+	    flex-direction: row;
+	}
+	.navbar-expand-custom .navbar-toggler {
+	    display: none;
+	}
+	.navbar-expand-custom .navbar-collapse {
+	    display: -ms-flexbox!important;
+	    display: flex!important;
+	    -ms-flex-preferred-size: auto;
+	    flex-basis: auto;
+	}
+}
+
+
+@media (max-width: 991px){
+	#navbarSupportedContent ul li a{
+		padding: 12px 30px;
+	}
+	.hori-selector{
+		margin-top: 0px;
+		margin-left: 10px;
+		border-radius: 0;
+		border-top-left-radius: 25px;
+		border-bottom-left-radius: 25px;
+	}
+	.hori-selector .left,
+	.hori-selector .right{
+		right: 10px;
+	}
+	.hori-selector .left{
+		top: -25px;
+		left: auto;
+	}
+	.hori-selector .right{
+		bottom: -25px;
+	}
+	.hori-selector .left:before{
+		left: -25px;
+		top: -25px;
+	}
+	.hori-selector .right:before{
+		bottom: -25px;
+		left: -25px;
+	}
+}
+
+  .text-container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .text-container h1{
+    margin: 0;
+    font-size: 400px;
+    color: rgba(225,225,225, .01);
+    background-image: url(image6.jpeg);
+    background-repeat: repeat;
+    -webkit-background-clip:text;
+    animation: animate 15s ease-in-out infinite;
+    text-align: center;
+    transform:translateY(-80px);
+    text-transform: uppercase;
+    opacity:0.6;
+    font-weight: 900;
+  }
+  
+    @keyframes animate {
+      0%, 100% {
+        background-position: left top;
+      }
+      25%{
+        background-position: right bottom;
+       }
+      50% {
+        background-position: left bottom;
+      }
+      75% {
+        background-position: right top;
+      }   
+  }
