@@ -1074,10 +1074,9 @@ hr {
 <body>
   <!-- Top-level containers for “pages” -->
   <div class="ct" id="t1">
-	  <div class="ct" id="t1-5"> 
-		  <div class="ct" id="t2">
-			  <div class="ct" id="t3">
-				  <div class="ct" id="t4">
+    <div class="ct" id="t2">
+      <div class="ct" id="t3">
+        <div class="ct" id="t4">
 
           <!-- Nav menu -->
           <ul id="menu">
@@ -1117,7 +1116,7 @@ hr {
                   <div class="job">
                     <span></span>
                     <div class="typing-text">
-                      <span class="one">Your go-to proactibe person for stats & finance.</span>
+                      <span class="one">Your go-to person for stats & finance.</span>
                       <span class="two"> </span>
                     </div>
                   </div>
@@ -1132,20 +1131,100 @@ hr {
 	<div class="ct" id="t1-5">
 		<div class="page" id="p1-5">
 			<section>
-				<div class="content" style="text-align:center; padding:50px;">
-					<h1 style="color:white; font-size:3em; margin-bottom:40px;">Education</h1>
-					<div style="color:#fff; font-size:1.2em; line-height:2em; max-width:700px; margin:0 auto; text-align:left;">
-						<p><strong>University of Toronto (SC) | Management Co-op</strong><br>
-							Double Degree: Bachelor of Science (BSc) in Statistics and Bachelor of Business Administration (BBA) in Finance<br>
-							September 2023 – 2027 (Expected)</p>
-						<p><strong>Cégep | John Abbott College, Montréal</strong><br>
-							Honors Commerce, General Social Science<br>
-							August 2022 – June 2023 R-score: 33 (GPA 4.0)</p>
+				<div class="content">
+					<h1 class="edu-title">Education</h1>
+					<div class="edu-list">
+					<div class="edu-item">
+						<h2 class="school">University of Toronto (SC)</h2>
+						<p class="program">Bachelor of Science (BSc) in Statistics & Bachelor of Business Administration (BBA) in Finance</p>
+						<p class="date">September 2023 – 2027 (Expected)</p>
 					</div>
-				</div>
-			</section>
-		</div>
-	</div>
+					<div class="edu-item">
+						<h2 class="school">Cégep | John Abbott College, Montréal</h2>
+						<p class="program">Honors Commerce, General Social Science</p>
+						<p class="date">August 2022 – June 2023, R-score: 33 (GPA 4.0)</p>
+					</div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<style>
+  #p1-5 .content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 30px;
+    color: #fff;
+    text-align: left;
+  }
+
+	.edu-title {
+    font-size: 3em;
+    text-align: center;
+    margin-bottom: 50px;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+  }
+
+  .edu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .edu-item {
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 4px solid #1de2d1;
+    border-radius: 8px;
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+  .edu-item:hover {
+    transform: translateX(10px);
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* 学校名称 */
+  .edu-item .school {
+    font-size: 1.6em;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #ffffff;
+  }
+
+  /* Program */
+  .edu-item .program {
+    font-size: 1.2em;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #1de2d1; /* 可以用亮色区分 Program */
+  }
+
+  /* Date */
+  .edu-item .date {
+    font-size: 1em;
+    font-weight: 300;
+    color: #ccc;
+  }
+
+  /* 响应式适配 */
+  @media screen and (max-width: 600px) {
+    #p1-5 .content {
+      padding: 40px 20px;
+    }
+    .edu-title {
+      font-size: 2.2em;
+    }
+    .edu-item .school {
+      font-size: 1.4em;
+    }
+    .edu-item .program {
+      font-size: 1em;
+    }
+  }
+</style>
 		
           <!-- PAGE 2: “Work” (5 sliding panels) -->
           <div class="page" id="p2">
