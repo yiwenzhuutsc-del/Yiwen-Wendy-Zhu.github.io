@@ -69,6 +69,7 @@
 
     /* Navigation anchor behavior:
        Jump to #t2 => move #p2 into view, #p1 offscreen, etc. */
+	#edu:target #edu,
     #t2:target #p2,
     #t3:target #p3,
     #t4:target #p4 {
@@ -76,11 +77,13 @@
       transition-delay: 0.4s !important;
     }
     /* When p2/p3/p4 is active, p1 goes black + blur icons */
+	#edu:target #edu,
     #t2:target #p1,
     #t3:target #p1,
     #t4:target #p1 {
       background: black;
     }
+	#edu:target #edu,
     #t2:target #p1 .icon,
     #t3:target #p1 .icon,
     #t4:target #p1 .icon {
