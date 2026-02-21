@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Yiwen-Zhu Finance & Stats</title>
+
+  <!-- jQuery + Bootstrap (optional) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KY4IhkEg3+5R2xRp3dN3bEuLXQTqrn6sEX4XpIsK5u0Zhrz4aKq8L+5HQaF1Q0r/4D5G3nDQ9kxs3+5ED2mK6w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+ 
+  <!-- FontAwesome + Google Fonts -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
+  />
+  <link href="https://fonts.googleapis.com/css?family=Raleway:900" rel="stylesheet" />
+
+  <!-- Main CSS -->
+  <style>
+    /* Reset and base styles */
+    html, body, .page {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      transition: all 0.8s cubic-bezier(0.54, 0.35, 0.29, 0.99);
+      color: #fff;
+      overflow: hidden;
+    }
+    * {
+      font-family: "open sans", "lato", "helvetica", sans-serif;
+      box-sizing: border-box;
+    }
+
+    /* Container for the 4 “pages” (p1, p2, p3, p4) */
+    .page {
+      position: absolute;
+    }
+    #p1 {
+      left: 0;
+      background: linear-gradient(-45deg, white,rgb(225, 78, 78), #d25817, #9c08a4, rgb(76, 76, 225));
+      background-size: 400% 400%;
+      animation: gradient 6s ease infinite;
+      height: 100vh;
+    }
+	#p1-5 {
+      left: 100%;
+      background: linear-gradient(-45deg, white,rgb(225, 78, 78), #d25817, #9c08a4, rgb(76, 76, 225));
+      background-size: 400% 400%;
+      animation: gradient 6s ease infinite;
+      height: 100vh;
+    }
+    #p2 {
+      left: 200%;
+      /* If you want to see the panel images behind the text, make it transparent:
+         background: transparent; */
+      background: transparent;
+    }
+    #p3 {
+      left: 200%;
+      background: gold;
+    }
+    #p4 {
+      left: 200%;
+      background: rgb(222, 216, 193);
+    }
+
+    /* Navigation anchor behavior:
+       Jump to #t2 => move #p2 into view, #p1 offscreen, etc. */
+	#edu:target #edu,
+    #t2:target #p2,
+    #t3:target #p3,
+    #t4:target #p4 {
+      transform: translateX(-190%);
+      transition-delay: 0.4s !important;
+    }
+    /* When p2/p3/p4 is active, p1 goes black + blur icons */
+	#edu:target #edu,
+    #t2:target #p1,
+    #t3:target #p1,
+    #t4:target #p1 {
+      background: black;
+    }
+	#edu:target #edu,
+    #t2:target #p1 .icon,
+    #t3:target #p1 .icon,
+    #t4:target #p1 .icon {
+      -webkit-filter: blur(3px);
+    }
+
+	#t1-5:target ul .icon { transform: scale(0.6); transition-delay: 0.25s; }
+	#t1-5:target #edu { transform: scale(1.1) !important; }
+
+    /* Navigation menu (HOME/WORK/PROJECTS/CONTACT) */
+    ul {
+      position: fixed;
+      z-index: 999; /* on top of everything else */
+      top: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+      height: 280px;
+      width: 10%;
+      padding: 0;
+      text-align: center;
+    }
+    #menu .icon {
+      margin: 30px 0;
+      color: #fff;
+      font-size: 24px;
+      display: block;
+      transform: translateY(-20px);
+      transition: all 0.5s ease-out !important;
+    }
+    #menu .icon:hover {
+      opacity: 0.5;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Scale the icons when pages are shifted */
+    #t2:target ul .icon,
+    #t3:target ul .icon,
+    #t4:target ul .icon {
+      transform: scale(0.6);
+      transition-delay: 0.25s;
+    }
+    #t2:target #dos,
+    #t3:target #tres,
+    #t4:target #cuatro {
+      transform: scale(1.1) !important;
+    }
+
+    /* Large icons in the center of each page (fa-rocket, etc.) */
+    .page .icon {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 10%;
+      left: 0;
+      width: 270px;
+      height: 170px;
+      margin: auto;
+      text-align: center;
+      font-size: 80px;
+      line-height: 1.3;
+      transform: translateX(360%) translateY(200px);
+      transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1.25);
+    }
+    .page#p1 .icon {
+      height: 220px;
+      transform: translateX(10%) !important; /* Show the bolt icon on p1 by default */
+    }
+    #t2:target .page#p2 .icon,
+    #t3:target .page#p3 .icon,
+    #t4:target .page#p4 .icon {
+      transform: translateX(0) !important;
+      transition-delay: 1s;
+    }
+
+    /* Typing effect, etc. on p1 */
+    .text-content {
+      position: fixed;
+      top: 50%;
+      left: 10%;
+      transform: translateY(-50%);
+      z-index: 0;
+      text-align: left;
+      display: flex;
+      align-items: center;
+    }
+    .text-content .text,
+    .text-content .name {
+      font-size: 36px;
+      font-weight: bold;
+      color: #ffffff;
+      text-shadow:1px 1px 0 black,
+                  -1px 1px 0 black,
+                  1px -1px 0 black,
+                  -1px -1px 0 black,
+                  1px 0px 0 black,
+                  -1px 0px 0 black,
+                  0px 1px 0 black,
+                  0px -1px 0 black;
+      margin-right: 10px;
+      white-space: nowrap;
+      display: inline-block;
+      z-index:1;
+    }
+    .text-content .text {
+      transform: translateX(-100px);
+      top: 35%;
+    }
+    .text-content .name {
+      font-size: 75px;
+      font-weight: 600;
+      text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+    }
+    .text-content .job {
+      color: #2c3350;
+      font-size: 40px;
+      display: flex;
+      position: fixed;
+      align-items: center;
+      transform: translateX(120px);
+      top: 45%;
+    }
+    .text-content .typing-text {
+      margin-left: 0px;
+      transform: translateY(60px)translateX(-60px);
+      overflow: hidden;
+      white-space: nowrap;
+      font-weight:bolder;
+      border-right: 4px solid #1de2d1;
+      animation: typing 3s steps(15) infinite;
+    }
+    @keyframes typing {
+      0% {
+        width: 0ch;
+      }
+      50% {
+        width: 30ch;
+      }
+      100% {
+        width: 46ch;
+      }
+    }
+    .text-content .job .one {
+      color: #1de2d1;
+    }
+    .text-content .job .two {
+      color: #1de2d1;
+    }
+
+    /* Big text "YIWEN" in the background of p1 */
+    .text-container {
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: #ffffff;
+      
+      z-index: -2;
+    }
+    .text-container h1 {
+      margin: 0;
+      font-size: 250px;
+      max-width: 1800px;
+      font-style:italic;
+
+      color: rgba(225, 225, 225, 0.01);
+      background-image: url("image6.jpeg");
+      background-repeat: repeat;
+      -webkit-background-clip: text;
+      animation: animate 15s ease-in-out infinite;
+      text-align: center;
+      transform: translateY(-40px) translateX(-110px);
+      text-transform: uppercase;
+      opacity: 0.8;
+      z-index:0;
+      font-weight: 1000;
+
+    }
+    @keyframes animate {
+      0%,
+      100% {
+        background-position: left top;
+      }
+      25% {
+        background-position: right bottom;
+      }
+      50% {
+        background-position: left bottom;
+      }
+      75% {
+        background-position: right top;
+      }
+    }
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* Five panels on p2 */
+    #p2 .panel-container {
+      display: flex;
+      flex-direction: column;
+      width: 120%;
+      transform: translate3d(0, 0, 0);
+    }
+    @media (min-width: 630px) {
+      #p2 .panel-container {
+        flex-direction: row;
+        width: 100%;
+        margin: 0;
+      }
+    }
+    #p2 .panel-container section {
+      flex: 1;
+      position: relative;
+      min-height: 20vh;
+      overflow: hidden;
+      z-index: 1;
+      transition: flex-grow 0.2s, opacity 0.2s;
+      /* The next line ensures the text sits above the :before background */
+    }
+    #p2 .panel-container section article {
+      position: relative;
+      z-index: 2; /* text above the background image */
+      padding: 20px;
+    }
+
+    /* The background image pseudo-element */
+    #p2 .panel-container section:before {
+      content: "";
+      position: absolute;
+      top: 0;      /* important so it fills the section */
+      left: 0;     /* important so it fills the section */
+      width: 60%;
+      height: 100%;
+      background-position: center;
+      background-size: cover;
+      transition: transform 0.2s, width 0.2s;
+      z-index: -1; /* behind the text */
+    }
+
+    /* Expand a middle panel on hover (desktop only) */
+    #p2 .panel-container section:not(:first-child):not(:last-child):hover {
+      flex: 2;
+    }
+    #p2 .panel-container section:not(:first-child):not(:last-child):hover:after {
+      opacity: 0.8;
+    }
+    #p2 .panel-container section:not(:first-child):not(:last-child):hover article {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.2s 0.2s, transform 0.2s 0.2s;
+    }
+
+    /* Hide p by default */
+    #p2 .panel-container section article p {
+    opacity: 0;
+    visibility: hidden; /* optional: prevents them from being focusable */
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    }
+
+    /* Show p when hovering on the panel section */
+    #p2 .panel-container section:hover article p {
+    opacity: 1;
+    visibility: visible;
+    }
+
+    #p4 {
+  left: 200%;
+  background: rgb(92, 92, 92);
+}
+#t4:target #p4 {
+  transform: translateX(-190%);
+  transition-delay: 0.4s !important;
+}
+
+
+
+    /* Skew the panels at larger widths */
+    @media (min-width: 630px) {
+      #p2 .panel-container section {
+        width: 20%;
+        height: 100vh;
+        margin-right: -1px;
+        transform: skewX(15deg) translateZ(0);
+      }
+      #p2 .panel-container section > article {
+        transform: skewX(-5deg);
+      }
+      #p2 .panel-container section:before {
+        left: -100%;
+        width: 400%;
+        transform: skewX(-15deg);
+      }
+    }
+
+    /* Panel backgrounds (5 different images) */
+    #p2 .panel-container section:nth-child(1):before {
+        background: linear-gradient(-45deg, rgb(0, 0, 0),rgb(129, 129, 129));
+        background-color:black;
+      background-image: url;
+      
+      background-size:contain;
+    }
+    #p2 .panel-container section:nth-child(2):before {
+      background-color: rgb(122, 122, 122);
+      background-image: url(image11.jpg);
+      background-size:contain;
+      
+    }
+    #p2 .panel-container section:nth-child(3):before {
+      background-color: rgb(202, 202, 202);
+      background-image: url(image7.jpg);
+      background-size:contain;
+    }
+    #p2 .panel-container section:nth-child(4):before {
+      background-color:rgb(122, 122, 122);
+      background-image: url(image13.webp);
+    }
+    #p2 .panel-container section:nth-child(5):before {
+      background-color:rgb(40, 40, 40);
+      background-image: url();
+    }
+
+    /* If the body has class "hide-images", remove the background images */
+    .hide-images #p2 .panel-container section:before {
+      background-image: none !important;
+    }
+
+    /* p3, p4 sample content */
+    .title {
+      font-size: 38px;
+      display: block;
+    }
+    .hint {
+      font-size: 13px;
+    }
+    .hint a {
+      color: yellow;
+      transition: all 250ms ease-out;
+    }
+    .hint a:hover {
+      color: #fff;
+    }
+    .line-trough {
+      text-decoration: line-through;
+    }
+
+    /* Button to toggle images (p2) */
+    #p2 button {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 8px 12px;
+      font-size: 10px;
+      text-transform: uppercase;
+      color: white;
+      background-color: black;
+      border: none;
+      outline: none;
+      cursor: pointer;
+    }
+
+    * { 
+  font-family: courier; 
+  box-sizing:border-box;
+}
+
+html, body { 
+  margin:0; 
+  padding:0; 
+  height:100%; 
+  min-height:100%; 
+}
+
+/* Layout */
+.grid {
+	position: relative;
+  width: 100vw;
+  height: 100vh;
+	display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.grid .column {
+	position: relative;
+	overflow: hidden;
+  width: 45%;
+	text-align: center;
+	cursor: pointer;
+}
+.grid .column img {
+	position: relative;
+	display: block;
+  height: 100%;
+  object-fit: cover;
+	width: 100%;
+	opacity: 0.8;
+}
+.grid .column .content {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+	padding: 2em;
+	color: #fff;
+	text-transform: uppercase;
+	font-size: 1.3rem;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.grid .column .content::before,
+.grid .column .content::after {
+	pointer-events: none;
+}
+
+.grid .column h2 {
+	word-spacing: -0.15rem;
+	font-weight: 300;
+}
+
+.grid .column h2 span {
+  display: block;
+	font-weight: 800;
+  font-size: 2.8rem;
+}
+
+.grid .column h2,
+.grid .column p {
+	margin: 0;
+}
+
+.grid .column p {
+	letter-spacing: 1px;
+	font-size: 68.5%;
+}
+
+.logo{
+  display: inline;
+  position: absolute;
+  top: 10%;
+  left: 48%;
+  text-align: center;
+}
+.logo img{
+    max-width: 100px;
+}
+a{
+  text-transform: uppercase;
+  font-size: .6rem;
+  text-decoration: none;
+  color: #FFF;
+  display: block;
+  font-family: sans-serif;
+}
+#west{
+  background: url(image12.webp) no-repeat center right;
+  background-size: cover;
+}
+#east{
+  background: url(image14.jfif) no-repeat center bottom;
+  background-size: cover;
+}
+#west .content{
+  background: rgba(70,181,84, .5);
+}
+#east .content{
+  background: rgba(207,172,49, .5);
+  
+}
+/*-----------------*/
+/***** Hover *****/
+/*-----------------*/
+.effect-hover h2,
+.effect-hover h3,
+.effect-hover p,
+.effect-hover i{
+	-webkit-transition: opacity 0.35s, 
+    -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+}
+
+.effect-hover .content::before {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 300px;
+	height: 300px;
+	border: 3px solid #fff;
+	content: '';
+	opacity: 0;
+	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+  /* remove this bit if you want it to swing up */
+	-webkit-transform: translate3d(-50%,-50%,0) rotate3d(0,0,1,-45deg) scale3d(0,0,1);
+	transform: translate3d(-50%,-50%,0) rotate3d(0,0,1,-45deg) scale3d(0,0,1);
+}
+
+.effect-hover p:hover,
+.effect-hover p:focus {
+	opacity: 0.6;
+} /* Keeps things consistent */
+
+
+.effect-hover p,
+.effect-hover h3{
+	opacity: 0;
+	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+}
+
+.effect-hover:hover .content::before {
+	opacity: 1;
+	-webkit-transform: translate3d(-50%,-50%,0) rotate3d(0,0,1,-45deg) scale3d(1,1,1);
+	transform: translate3d(-50%,-50%,0) rotate3d(0,0,1,-45deg) scale3d(1,1,1);
+}
+
+.effect-hover:hover h2 {
+	opacity: 0;
+	-webkit-transform:  scale3d(0.8,0.8,1);
+	transform: scale3d(0.8,0.8,1);
+}
+.effect-hover:hover h3,
+.effect-hover:hover p{
+	opacity: 1;
+}
+.effect-hover:hover i{
+  -webkit-transform:  scale3d(2.5,2.5,2);
+	transform: scale3d(2.5,2.5,2);
+}
+
+/* Overlays */
+.overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100vh;
+  width: 100vw;
+  display: none;
+  z-index: 99;
+  overflow-x: hidden;
+  background: #eee; 
+}
+/* Block works too, but flex is more...flexible */
+.overlay.open{
+  display: flex;
+  background-color: transparent;
+}
+.overlay .grid{
+    max-width:100%;
+background-color: #f4f4f4;
+margin:0 auto;
+}
+.overlay .column{
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.overlay img{vertical-align: bottom;}
+.product-content{
+    color:#2c3350;
+  align-content: center;
+  justify-content: center;
+  font-size: 1.4rem;
+ max-width: 400px;
+}
+.price{
+  color: #34d5cf;
+  margin: 1vw 0;
+}
+.currency{
+  font-weight: 700;
+  font-size: 1rem;
+}
+.amount{
+  font-size: 1.6rem;
+  vertical-align: top;
+  font-family: sans-serif;
+}
+/* button */
+.buy-button{
+    height: 50px;
+    margin: 2rem 0;
+    position: relative;
+    background: #eee;
+    border: 3px solid #f9efb2;
+}
+.buy-button > span {
+  display: block;
+  position: relative;
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  color: #1f1f22;
+  -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+  z-index: 10;
+  line-height: 60px;
+}
+
+.buy-button::after, .buy-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 3px solid #f9efb2;
+    -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s, ease-in-out .3s;
+}
+.buy-button::before {
+    background: #FFF;
+    margin: 0px 0 0 0px;
+    top: 5px;
+    left: 5px;
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    z-index: 1;
+}
+
+.buy-button:hover span,
+.buy-button:hover::before {
+    transform: translate3d(-4px, -4px, 0px);
+}
+.buy-button:hover::before{
+  background: #f9efb2;
+}
+.size-guide-link {
+    display: inline-block;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: .8rem;
+}
+.underline-link {
+    overflow: hidden;
+    padding-bottom: .5vh;
+    position: relative;
+}
+.underline-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #202023;
+    -webkit-transform-origin: left;
+    transform-origin: left;
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transition: -webkit-transform .2s ease-in-out;
+    transition: transform .2s ease-in-out;
+    
+}
+.underline-link.active::before,
+.underline-link.hovered::before,
+.underline-link:hover::before {
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);    
+}
+/* Close Icon animated */
+/* Thanks to @arthurhamon */
+.close-icon{
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  position: absolute;
+  top: 4%;
+  right: 16%;
+}
+/* Test your cubic beziers here http://cubic-bezier.com/ */
+.close-icon div {
+    display: block;
+    height: 3px;
+    position: relative;
+    transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1) 0s, opacity 0.4s cubic-bezier(0.19, 1, 0.22, 1) 0s;
+    width: 36px;
+  
+}
+.close-icon div:first-child {
+    transform: translate3d(0px, 10px, 0px) rotate3d(0, 0, 1, -45deg);
+}
+.close-icon div:first-child::after, .close-icon div:first-child::before {
+    transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1) 0s, opacity 0.2s cubic-bezier(0.19, 1, 0.22, 1) 0s;
+}
+.close-icon div:last-child {
+    transform: translate3d(0px, 8px, 0px) rotate3d(0, 0, 1, 45deg);
+}
+.close-icon div:last-child::after, .close-icon div:last-child::before {
+    transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1) 0.2s, opacity 0.2s cubic-bezier(0.19, 1, 0.22, 1) 0.18s;
+}
+.close-icon div::after, .close-icon div::before {
+    content: "";
+    display: block;
+    height: 100%;
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+}
+/* Now you see it */
+.close-icon div::before {
+    background: none repeat scroll 0 0 #34d5cf;
+    opacity: 1;
+    transform: translate3d(0px, 0px, 0px);
+}
+/* Now you don't */
+.close-icon div::after {
+    background: none repeat scroll 0 0 #ead918;
+    opacity: 0;
+    transform: translate3d(100%, 0px, 0px);
+}
+.close-icon:hover div::before {
+    opacity: 0;
+    transform: translate3d(-100%, 0px, 0px);
+}
+.close-icon:hover div::after {
+    opacity: 1;
+    transform: translate3d(0px, 0px, 0px);
+}
+
+
+
+#contact {
+  width: 100%;
+  height: 100%;
+}
+
+.section-header {
+  text-align: center;
+  margin: 0 auto;
+  padding: 40px 0;
+  font: 300 60px 'Oswald', sans-serif;
+  color: #ffffff;
+  text-shadow:1px 1px 0 black,
+                  -1px 1px 0 black,
+                  1px -1px 0 black,
+                  -1px -1px 0 black,
+                  1px 0px 0 black,
+                  -1px 0px 0 black,
+                  0px 1px 0 black,
+                  0px -1px 0 black;
+  text-transform: uppercase;
+  transform:translateY(30px) translateX(-220px);
+  letter-spacing: 6px;
+}
+
+.contact-wrapper {
+  display: flex;
+  justify-content: center; /* centers the entire container horizontally */
+  align-items: center;     /* optional: vertically center if needed */
+  margin: 0 auto;
+  max-width: 840px; /* or your preferred width */
+  padding: 20px;
+  position: relative;
+}
+
+/* Begin Right Contact Page */
+.direct-contact-container {
+  max-width: 400px;
+  margin: 0 auto;       /* center within the .contact-wrapper */
+  text-align: center;   /* center text inside */
+  transform: none;      /* remove the translateX(300px) so it doesn't shift left or right */
+}
+
+/* Location, Phone, Email Section */
+.contact-list {
+  list-style-type: none;
+  margin-left: -30px;
+  padding-right: 20px;
+  z-index:-1;
+}
+
+.list-item {
+  line-height: 4;
+  transform:translateX(400px) translateY(30px);
+  color: #d6d6d6;
+  padding-top:10px;
+  text-shadow:1px 1px 0 black,
+                  -1px 1px 0 black,
+                  1px -1px 0 black,
+                  -1px -1px 0 black,
+                  1px 0px 0 black,
+                  -1px 0px 0 black,
+                  0px 1px 0 black,
+                  0px -1px 0 black;
+  text-align: center;
+  margin:0.3em 0;
+}
+
+.contact-text {
+  font: 100 18px 'Lato', sans-serif;
+  letter-spacing: 1.9px;
+  
+  color: #bbb;
+}
+
+.place,
+.phone,
+.gmail {
+  margin-left: 0; /* remove these offsets */
+}
+
+.contact-text a {
+  color: #bbb;
+  text-decoration: none;
+  text-align: center;
+  font-size:0.8em;
+  transition-duration: 0.2s;
+}
+
+.contact-text a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+
+/* Social Media Icons */
+.social-media-list {
+  position: relative;
+  font-size: 22px;
+  text-align: center;
+  width: 100%;
+  transform:translateY(310px) translateX(-220px);
+  margin: 0 auto;
+  
+  padding: 0;
+}
+
+.social-media-list li a {
+  color: #fff;
+  transform:translateY(-16px);
+}
+
+.social-media-list li {
+  position: relative; 
+  display: inline-block;
+  height: 30px;
+  width: 30px;
+  margin: 10px 3px;
+  line-height: 60px;
+  border-radius: 50%;
+  color: #fff;
+  background-color: rgb(27,27,27);
+  cursor: pointer; 
+
+  transition: all .2s ease-in-out;
+}
+
+.social-media-list li:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  line-height: 60px;
+  border-radius: 50%;
+  opacity: 0;
+  box-shadow: 0 0 0 1px #fff;
+  transition: all .2s ease-in-out;
+}
+
+.social-media-list li:hover {
+  background-color: #fff; 
+}
+
+.social-media-list li:hover:after {
+  opacity: 1;  
+  transform: scale(0.2);
+  /* transform:translateX(-14px) translateY(-18px); */
+  transition-timing-function: cubic-bezier(0.3,0.7,0.15,1.65);
+}
+
+.social-media-list li:hover a {
+  color: #000;
+}
+
+.copyright {
+  font: 200 10px 'Oswald', sans-serif;
+  color: #d1d1d1;
+  transform:translate(-210px,50px);
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+hr {
+  border-color: rgba(255,255,255,.6);
+  transform:translateX(-220px);
+}
+
+/* Begin Media Queries*/
+@media screen and (max-width: 850px) {
+  .contact-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  .direct-contact-container, .form-horizontal {
+    margin: 0 auto;
+  }  
+  
+  .direct-contact-container {
+    margin-top: 60px;
+    max-width: 300px;
+  }    
+  .social-media-list li {
+    height: 60px;
+    width: 60px;
+    line-height: 60px;
+  }
+  .social-media-list li:after {
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+  }
+}
+
+@media screen and (max-width: 569px) {
+
+  .direct-contact-container, .form-wrapper {
+    float: none;
+    margin: 0 auto;
+  }  
+  .form-control, textarea {
+    
+    margin: 0 auto;
+  }
+ 
+  
+  .name, .email, textarea {
+    width: 280px;
+  } 
+  
+  .direct-contact-container {
+    margin-top: 60px;
+    max-width: 280px;
+  }  
+  .social-media-list {
+    left: 0;
+  }
+  .social-media-list li {
+    height: 55px;
+    width: 55px;
+    line-height: 55px;
+    font-size: 2rem;
+  }
+  .social-media-list li:after {
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
+  }
+  
+}
+
+@media screen and (max-width: 410px) {
+  .send-button {
+    width: 99%;
+  }
+}
+
+
+
+
+  </style>
+</head>
+
+<body>
+  <!-- Top-level containers for “pages” -->
+  <div class="ct" id="t1">
+    <div class="ct" id="t2">
+      <div class="ct" id="t3">
+        <div class="ct" id="t4">
+
+          <!-- Nav menu -->
+          <ul id="menu">
+			  <a href="#t1"><li class="icon fa fa-bolt" id="uno" style="font-size:24px;"><br> HOME</li></a>
+			  <a href="#t1-5"><li class="icon fa fa-graduation-cap" id="edu" style="font-size:24px;"><br> EDUCATION</li></a>
+			  <a href="#t2"><li class="icon fa fa-keyboard-o" id="dos" style="font-size:24px;"><br> WORK</li></a>
+			  <a href="#t3"><li class="icon fa fa-rocket" id="tres" style="font-size:24px;"> PROJECTS</li></a>
+			  <a href="#t4"><li class="icon fa fa-dribbble" id="cuatro" style="font-size:24px;"> CONTACT</li></a>
+		  </ul>
+
+          <!-- PAGE 1: “Home” -->
+          <div class="page" id="p1">
+            <section>
+              <div class="content">
+                <div class="text-content">
+                  <!-- <div class="text" style="transform:translateX(60px) translateY(-180px);">
+                    Hello there, <br>
+                    learn more about your dream candidate!
+                  </div> -->
+                  <div class="name" style="font-size:3em;transform:translateX(-560px) translateY(0px);" >
+                    
+                  </div>
+                  <div class="image1">
+                    <img
+                      src="image5.jpeg"
+                      alt="profile"
+                      style="
+                        position: fixed;
+                        transform: translate(800px, -320px);
+                        opacity: 1;
+                        width: 480px;
+                        height: 620px;
+                        border-radius:40%;
+                      "
+                    />
+                  </div>
+                  <div class="job">
+                    <span></span>
+                    <div class="typing-text">
+                      <span class="one">Your go-to person for stats & finance.</span>
+                      <span class="two"> </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-container">
+                <h1>YIWEN</h1>
+              </div>
+            </section>
+          </div>
+
+	<div class="ct" id="t1-5">
+		<div class="page" id="p1-5">
+			<section>
+				<div class="content" style="text-align:center; padding:50px;">
+					<h1 style="color:white; font-size:3em; margin-bottom:40px;">Education</h1>
+					<div style="color:#fff; font-size:1.2em; line-height:2em; max-width:700px; margin:0 auto; text-align:left;">
+						<p><strong>University of Toronto (SC) | Management Co-op</strong><br>
+							September 2023 – 2027 (Expected)<br>
+							Double Degree: Bachelor of Science (BSc) in Statistics and Bachelor of Business Administration (BBA) in Finance</p>
+						<p><strong>Cégep | John Abbott College, Montréal</strong><br>
+							Honors Commerce, General Social Science<br>
+							August 2022 – June 2023 R-score: 33 (GPA 4.0)</p>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+			
+          <!-- PAGE 2: “Work” (5 sliding panels) -->
+          <div class="page" id="p2">
+            <div style="color: rgba(255, 255, 255, 0.708);transform:translateY(550px) translateX(100px);z-index:1111111;position:absolute;">Hover to show details</div>
+            <main class="panel-container">
+              <section>
+                <article>
+                  <h2 style="font-weight:bolder;transform:translateX(40px) translateY(180px); font-size:28px; text-shadow:
+                  1px 1px 0 black,
+                  -1px 1px 0 black,
+                  1px -1px 0 black,
+                  -1px -1px 0 black,
+                  1px 0px 0 black,
+                  -1px 0px 0 black,
+                  0px 1px 0 black,
+                  0px -1px 0 black;"></h2>
+                  <!-- <h2>Hover <br>to view <br>work details <br> <br><br><br> my skills: <br> aaa <br> bbb <br>ccc <br> ddd</h2> -->
+                  <p></p>
+                </article>
+              </section>
+              <section>
+                <article>
+                  <h2 style="padding-left:12px;padding-right:500px;background:rgba(0, 0, 0, 0.489);font-weight:bolder;color:rgb(255, 255, 255);transform:translateX(0px) translateY(0px);text-align: center; text-shadow:
+                  1px 1px 0 black,
+                  -1px 1px 0 black,
+                  1px -1px 0 black,
+                  -1px -1px 0 black,
+                  1px 0px 0 black,
+                  -1px 0px 0 black,
+                  0px 1px 0 black,
+                  0px -1px 0 black;">Founder:<br>
+                  YZ Renovation Company</h2>
+                  <p style="color:rgb(255, 255, 255);text-shadow:1px 1px 0 black,
+                  -1px 1px 0 black,
+                  1px -1px 0 black,
+                  -1px -1px 0 black,
+                  1px 0px 0 black,
+                  -1px 0px 0 black,
+                  0px 1px 0 black,
+                  0px -1px 0 black">Negotiated long-term contracts with suppliers, which reduced raw material costs and increased profitability by 8%
+                    <br>• Improved customer relationships and brand visibility by implementing marketing strategies through websites and social
+                    media platforms
+                    <br>• Built a strong reputation and client loyalty through tailored solutions and follow-up visits to ensure satisfaction and perfect
+                    outcomes</p>
+                </article>
+              </section>
+              <section>
+                <article>
+                  <h2 style="background:rgba(0, 0, 0, 0.489);padding-left:12px;font-weight:bolder;transform:translateX(30px) translateY(420px);color:rgb(255, 255, 255);text-shadow:1px 1px 0 black,
+                  -1px 1px 0 black,
+                  1px -1px 0 black,
+                  -1px -1px 0 black,
+                  1px 0px 0 black,
+                  -1px 0px 0 black,
+                  0px 1px 0 black,
+                  0px -1px 0 black">Founder: <br> UMI Clothing</h2>
+                  <p style="color:rgb(255, 255, 255);text-shadow:1px 1px 0 black,
+                  -1px 1px 0 black,
+                  1px -1px 0 black,
+                  -1px -1px 0 black,
+                  1px 0px 0 black,
+                  -1px 0px 0 black,
+                  0px 1px 0 black,
+                  0px -1px 0 black">Negotiated price and cooperation with 30+ clothing manufacturers to secure optimal monthly suppliers, which helped
+                    strengthen the supply chain
+                    <br>• Conducted detailed cost and profit analysis for each item, optimizing Excel table functions and data modeling to optimize
+                    pricing strategies
+                    <br>• Proficiently utilized search engines and optimized online platforms to drive e-commerce sales by analyzing consumer trends
+                    and collecting data from statistics and Google Trends to create distribution graphs</p>
+                </article>
+              </section>
+              <section>
+                <article>
+                  <h2 style="background:rgba(0, 0, 0, 0.489);padding-left:12px;padding-right:500px;font-weight:bolder;transform:translateX(-10px) translateY(0px);color:rgb(255, 255, 255);text-shadow:1px 1px 0 black,
+                  -1px 1px 0 black,
+                  1px -1px 0 black,
+                  -1px -1px 0 black,
+                  1px 0px 0 black,
+                  -1px 0px 0 black,
+                  0px 1px 0 black,
+                  0px -1px 0 black">Associate of Industry Panel</h2>
+                  <p style="color:rgb(255, 255, 255);text-shadow:1px 1px 0 black,
+                  -1px 1px 0 black,
+                  1px -1px 0 black,
+                  -1px -1px 0 black,
+                  1px 0px 0 black,
+                  -1px 0px 0 black,
+                  0px 1px 0 black,
+                  0px -1px 0 black">• Researched AI and new energy trends, leveraging data-driven analysis to support strategic planning by evaluating the
+                    information timeliness and depth, and cross-verifying from multiple perspectives to ensure authenticity for strategic planning
+                    <br>• Utilized Power BI and Excel to optimize club operations to provide visualization and modeling with data collection, which
+                    enhanced organizational plan and group discussion efficiency</p>
+                </article>
+              </section>
+              <section>
+                <article>
+                  <h2></h2>
+                  <p></p>
+                </article>
+              </section>
+            </main>
+            <button>Toggle images</button>
+          </div>
+
+          <!-- PAGE 3: “Projects” -->
+          <div class="page" id="p3">
+            <div>
+                <div class="grid">
+                    <!--Left side-->
+                    <div id="west" class="column effect-hover">
+                      <div class="content">
+                        <i class="fa fa-desktop" aria-hidden="true"></i>
+                        
+                        <h2>Coding Projects <span>Open</span></h2>
+                        <h3>Python, R <br>
+                            Power BI</h3>
+                        <p>view project detail</p>
+                      </div>		    
+                    </div>
+                    <!--Right side-->
+                    <div id="east" class="column effect-hover">
+                      <div class="content">
+                        
+                        <i class="fa fa-credit-card" aria-hidden="true"> </i>
+                        
+                        <h2>Finance Projects <span>Open</span></h2>
+                        <h3>Experienced in... <br> ........</h3>
+                        <p>view project detail</p>
+                      </div>			
+                    </div>
+                    <!--Logo-->
+                    <div class="logo">
+                      <!-- <a href="http://webdesignerwall.com/tutorials/lively-splitscreen-layout-css3-animations" target="_blank">View Tutorial</a> -->
+                      <!-- <img src="https://assets.codepen.io/927610/logo24w.png" /> -->
+                      </a>
+                    </div>
+                    
+                  </div>
+                  
+                  <!--Left side content-->
+                  <div id="west-overlay" class="overlay">
+                       <div class="grid">      
+                         <div class="column">
+                           <img src="image15.jfif">
+                         </div>       
+                          <div class="column">  
+                            <div class="product-content">
+                               <h1>CODING RELATED PROJECTS</h1>
+                              <p>I am familiar with Python, R, Power BI, HTML,CSS, and JS. </p>
+                              
+                              <div class="size-guide-link underline-link">Some project details...</div>
+                            </div>
+                         </div>         
+                       </div><!--End Grid-->
+                    
+                       <div class="close-icon">
+                          <div></div>
+                          <div></div>
+                        </div> 
+                  </div>
+                  <!--Right side content-->
+                  <div id="east-overlay" class="overlay">
+                       <div class="grid">      
+                         <div class="column">
+                           <img src="image15.jfif">
+                         </div>       
+                          <div class="column">  
+                            <div class="product-content">
+                               <h1>Finance projects</h1>
+                              <p>project details explained... <br>replaces images on the left. <br> some more details</p>
+                              
+                         </div>         
+                       </div><!--End Grid-->
+                    
+                       <div class="close-icon">
+                          <div></div>
+                          <div></div>
+                        </div> 
+                  </div>
+                  <script src="index.js"></script>
+            </div>
+          </div>
+
+          
+  
+
+        </div>
+        <!-- PAGE 4: “Contact” -->
+          <!-- PAGE 4: “Contact” -->
+          <div class="page" id="p4">
+            <section id="contact">
+  
+                <h1 class="section-header">Contact Me</h1>
+                
+                
+                <div class="contact-wrapper">
+                
+                <!-- Left contact page --> 
+                  
+                  
+                  
+                <!-- Left contact page --> 
+                  
+                    <div class="direct-contact-container">
+              
+                      <ul class="contact-list">
+                        <li class="list-item"><i class="fa fa-map-marker fa-2x"><span class="contact-text place"> Toronto, CA</span></i></li>
+                        
+                        <li class="list-item"><i class="fa fa-phone fa-2x"><span class="contact-text phone"><a href="tel:1-212-555-5555" title="Give me a call" style="transform:translateY(10px) translateX(0px);">(514)691-0999</a></span></i></li>
+                        
+                        <li class="list-item"><i class="fa fa-envelope fa-2x" style="transform:translateX(-70px);"><span class="contact-text gmail"><a href="mailto:#" title="Send me an email" style="transform:translateX(0px) translateY(10px);">yw.zhu@mail.utoronto.ca</a></span></i></li>
+                        
+                      </ul>
+              
+                      <hr>
+                      <ul class="social-media-list">
+                        <!-- <li><a href="#" target="_blank" class="contact-icon">
+                          <i class="fa fa-github" aria-hidden="true"></i></a>
+                        </li> -->
+                        <!-- add this if you have github wendy. you need to have one -->
+                        <li><a href="#" target="_blank" class="contact-icon">
+                          <i class="fa fa-codepen" aria-hidden="true"></i></a>
+                        </li>
+                        <li><a href="http://linkedin.com/in/yiwen-zhu-77617b294" target="_blank" class="contact-icon">
+                          <i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                        </li>
+                        <li><a href="https://www.instagram.com/wendy.mail?igsh=N2gybWx0bHJ1bnln" target="_blank" class="contact-icon">
+                          <i class="fa fa-instagram" aria-hidden="true"></i></a>
+                        </li>       
+                      </ul>
+                      <hr>
+              
+                      <div class="copyright">&copy; ALL OF THE RIGHTS RESERVED</div>
+              
+                    </div>
+                  
+                </div>
+                
+              </section>  
+              <!-- <div>
+                <h2 style="transform:translate(-200px,-20px);">Check out my resume</h2>
+                <img src="" alt="">
+              </div> -->
+              <div class="image1">
+                <img
+                  src="image5.jpeg"
+                  alt="profile"
+                  style="
+                    position: fixed;
+                    transform: translate(800px, -600px);
+                    opacity: 1;
+                    width: 480px;
+                    height: 620px;
+                    border-radius:40%;
+                  "
+                />
+              </div>
+              
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Simple script to toggle .hide-images on the <body> -->
+  <script>
+    const btn = document.querySelector('#p2 button');
+    const body = document.querySelector('body');
+    btn.addEventListener('click', () => {
+      body.classList.toggle('hide-images');
+    });
+  </script>
+
+  <!-- Optionally include your other JS files if needed -->
+  <script src="homepage.js"></script>
+  <script src="hp.js"></script>
+</body>
+</html>
