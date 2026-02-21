@@ -52,6 +52,13 @@
       animation: gradient 6s ease infinite;
       height: 100vh;
     }
+	#p1-5 {
+      left: 100%;
+      background: linear-gradient(-45deg, white,rgb(225, 78, 78), #d25817, #9c08a4, rgb(76, 76, 225));
+      background-size: 400% 400%;
+      animation: gradient 6s ease infinite;
+      height: 100vh;
+    }
     #p2 {
       left: 200%;
       /* If you want to see the panel images behind the text, make it transparent:
@@ -89,6 +96,9 @@
     #t4:target #p1 .icon {
       -webkit-filter: blur(3px);
     }
+
+	#t1-5:target ul .icon { transform: scale(0.6); transition-delay: 0.25s; }
+	#t1-5:target #edu { transform: scale(1.1) !important; }
 
     /* Navigation menu (HOME/WORK/PROJECTS/CONTACT) */
     ul {
