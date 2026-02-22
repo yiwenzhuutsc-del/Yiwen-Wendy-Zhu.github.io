@@ -41,7 +41,7 @@
       box-sizing: border-box;
     }
 
-    /* Container for the 4 “pages” (p1, p2, p3, p4) */
+    /* Container for the 4 "pages" (p1, p2, p3, p4) */
     .page {
       position: absolute;
     }
@@ -60,30 +60,44 @@
     }
     #p3 {
       left: 200%;
-      background: gold;
+      background: #111;
     }
     #p4 {
       left: 200%;
       background: rgb(222, 216, 193);
+    }
+    #p5 {
+      left: 200%;
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    }
+    #p6 {
+      left: 200%;
+      background: transparent;
     }
 
     /* Navigation anchor behavior:
        Jump to #t2 => move #p2 into view, #p1 offscreen, etc. */
     #t2:target #p2,
     #t3:target #p3,
-    #t4:target #p4 {
+    #t4:target #p4,
+    #t5:target #p5,
+    #t6:target #p6 {
       transform: translateX(-190%);
       transition-delay: 0.4s !important;
     }
-    /* When p2/p3/p4 is active, p1 goes black + blur icons */
+    /* When secondary page is active, p1 goes black + blur icons */
     #t2:target #p1,
     #t3:target #p1,
-    #t4:target #p1 {
+    #t4:target #p1,
+    #t5:target #p1,
+    #t6:target #p1 {
       background: black;
     }
     #t2:target #p1 .icon,
     #t3:target #p1 .icon,
-    #t4:target #p1 .icon {
+    #t4:target #p1 .icon,
+    #t5:target #p1 .icon,
+    #t6:target #p1 .icon {
       -webkit-filter: blur(3px);
     }
 
@@ -95,13 +109,13 @@
       bottom: 0;
       left: 0;
       margin: auto;
-      height: 280px;
+      height: 480px;
       width: 10%;
       padding: 0;
       text-align: center;
     }
     #menu .icon {
-      margin: 30px 0;
+      margin: 16px 0;
       color: #fff;
       font-size: 24px;
       display: block;
@@ -119,13 +133,17 @@
     /* Scale the icons when pages are shifted */
     #t2:target ul .icon,
     #t3:target ul .icon,
-    #t4:target ul .icon {
+    #t4:target ul .icon,
+    #t5:target ul .icon,
+    #t6:target ul .icon {
       transform: scale(0.6);
       transition-delay: 0.25s;
     }
     #t2:target #dos,
     #t3:target #tres,
-    #t4:target #cuatro {
+    #t4:target #cuatro,
+    #t5:target #cinco,
+    #t6:target #seis {
       transform: scale(1.1) !important;
     }
 
@@ -151,7 +169,9 @@
     }
     #t2:target .page#p2 .icon,
     #t3:target .page#p3 .icon,
-    #t4:target .page#p4 .icon {
+    #t4:target .page#p4 .icon,
+    #t5:target .page#p5 .icon,
+    #t6:target .page#p6 .icon {
       transform: translateX(0) !important;
       transition-delay: 1s;
     }
@@ -308,11 +328,10 @@
       overflow: hidden;
       z-index: 1;
       transition: flex-grow 0.2s, opacity 0.2s;
-      /* The next line ensures the text sits above the :before background */
     }
     #p2 .panel-container section article {
       position: relative;
-      z-index: 2; /* text above the background image */
+      z-index: 2;
       padding: 20px;
     }
 
@@ -320,14 +339,14 @@
     #p2 .panel-container section:before {
       content: "";
       position: absolute;
-      top: 0;      /* important so it fills the section */
-      left: 0;     /* important so it fills the section */
+      top: 0;
+      left: 0;
       width: 60%;
       height: 100%;
       background-position: center;
       background-size: cover;
       transition: transform 0.2s, width 0.2s;
-      z-index: -1; /* behind the text */
+      z-index: -1;
     }
 
     /* Expand a middle panel on hover (desktop only) */
@@ -343,29 +362,20 @@
       transition: opacity 0.2s 0.2s, transform 0.2s 0.2s;
     }
 
-    /* Hide p by default */
+    /* Work panel text always visible */
     #p2 .panel-container section article p {
-    opacity: 0;
-    visibility: hidden; /* optional: prevents them from being focusable */
-    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-    }
-
-    /* Show p when hovering on the panel section */
-    #p2 .panel-container section:hover article p {
-    opacity: 1;
-    visibility: visible;
+      opacity: 1;
+      visibility: visible;
     }
 
     #p4 {
-  left: 200%;
-  background: rgb(92, 92, 92);
-}
-#t4:target #p4 {
-  transform: translateX(-190%);
-  transition-delay: 0.4s !important;
-}
-
-
+      left: 200%;
+      background: rgb(92, 92, 92);
+    }
+    #t4:target #p4 {
+      transform: translateX(-190%);
+      transition-delay: 0.4s !important;
+    }
 
     /* Skew the panels at larger widths */
     @media (min-width: 630px) {
@@ -387,17 +397,15 @@
 
     /* Panel backgrounds (5 different images) */
     #p2 .panel-container section:nth-child(1):before {
-        background: linear-gradient(-45deg, rgb(0, 0, 0),rgb(129, 129, 129));
-        background-color:black;
+      background: linear-gradient(-45deg, rgb(0, 0, 0),rgb(129, 129, 129));
+      background-color:black;
       background-image: url;
-      
       background-size:contain;
     }
     #p2 .panel-container section:nth-child(2):before {
       background-color: rgb(122, 122, 122);
       background-image: url(image11.jpg);
       background-size:contain;
-      
     }
     #p2 .panel-container section:nth-child(3):before {
       background-color: rgb(202, 202, 202);
@@ -415,6 +423,119 @@
 
     /* If the body has class "hide-images", remove the background images */
     .hide-images #p2 .panel-container section:before {
+      background-image: none !important;
+    }
+
+    /* Button to toggle images (p2) */
+    #p2 button {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 8px 12px;
+      font-size: 10px;
+      text-transform: uppercase;
+      color: white;
+      background-color: black;
+      border: none;
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Five panels on p6 (Extracurricular) */
+    #p6 .panel-container {
+      display: flex;
+      flex-direction: column;
+      width: 120%;
+      transform: translate3d(0, 0, 0);
+    }
+    @media (min-width: 630px) {
+      #p6 .panel-container {
+        flex-direction: row;
+        width: 100%;
+        margin: 0;
+      }
+    }
+    #p6 .panel-container section {
+      flex: 1;
+      position: relative;
+      min-height: 20vh;
+      overflow: hidden;
+      z-index: 1;
+      transition: flex-grow 0.2s, opacity 0.2s;
+    }
+    #p6 .panel-container section article {
+      position: relative;
+      z-index: 2;
+      padding: 20px;
+    }
+    #p6 .panel-container section:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 60%;
+      height: 100%;
+      background-position: center;
+      background-size: cover;
+      transition: transform 0.2s, width 0.2s;
+      z-index: -1;
+    }
+    #p6 .panel-container section:not(:first-child):not(:last-child):hover {
+      flex: 2;
+    }
+    #p6 .panel-container section:not(:first-child):not(:last-child):hover:after {
+      opacity: 0.8;
+    }
+    #p6 .panel-container section:not(:first-child):not(:last-child):hover article {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.2s 0.2s, transform 0.2s 0.2s;
+    }
+    #p6 .panel-container section article p {
+      opacity: 1;
+      visibility: visible;
+    }
+    @media (min-width: 630px) {
+      #p6 .panel-container section {
+        width: 20%;
+        height: 100vh;
+        margin-right: -1px;
+        transform: skewX(15deg) translateZ(0);
+      }
+      #p6 .panel-container section > article {
+        transform: skewX(-5deg);
+      }
+      #p6 .panel-container section:before {
+        left: -100%;
+        width: 400%;
+        transform: skewX(-15deg);
+      }
+    }
+    /* Panel backgrounds for p6 */
+    #p6 .panel-container section:nth-child(1):before {
+      background: linear-gradient(-45deg, #0d3d0d, #1a5c1a);
+      background-color: #0d3d0d;
+    }
+    #p6 .panel-container section:nth-child(2):before {
+      background-color: #1b4d2e;
+      background-image: url(image12.webp);
+      background-size: cover;
+    }
+    #p6 .panel-container section:nth-child(3):before {
+      background-color: #2a5c3a;
+      background-image: url(image14.jfif);
+      background-size: cover;
+    }
+    #p6 .panel-container section:nth-child(4):before {
+      background-color: #1b4d2e;
+      background-image: url(image7.jpg);
+      background-size: cover;
+    }
+    #p6 .panel-container section:nth-child(5):before {
+      background: linear-gradient(-45deg, #1a5c1a, #0d3d0d);
+      background-color: #0d3d0d;
+    }
+    .hide-images #p6 .panel-container section:before {
       background-image: none !important;
     }
 
@@ -437,20 +558,6 @@
       text-decoration: line-through;
     }
 
-    /* Button to toggle images (p2) */
-    #p2 button {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      padding: 8px 12px;
-      font-size: 10px;
-      text-transform: uppercase;
-      color: white;
-      background-color: black;
-      border: none;
-      outline: none;
-      cursor: pointer;
-    }
 
     * { 
   font-family: courier; 
@@ -547,21 +654,6 @@ a{
   color: #FFF;
   display: block;
   font-family: sans-serif;
-}
-#west{
-  background: url(image12.webp) no-repeat center right;
-  background-size: cover;
-}
-#east{
-  background: url(image14.jfif) no-repeat center bottom;
-  background-size: cover;
-}
-#west .content{
-  background: rgba(70,181,84, .5);
-}
-#east .content{
-  background: rgba(207,172,49, .5);
-  
 }
 /*-----------------*/
 /***** Hover *****/
@@ -1057,25 +1149,152 @@ hr {
 
 
 
+
+    /* Project page 3x2 grid */
+    #p3 > div > .grid {
+      width: 100%;
+    }
+    #p3 > div > .grid > .column {
+      flex: 0 0 33.3333%;
+      width: 33.3333%;
+      height: 50vh;
+    }
+    #p3 .overlay .column.scrollable {
+      overflow-y: auto;
+      align-items: flex-start;
+    }
+    #p3 .overlay .column.scrollable img {
+      height: auto;
+      width: 100%;
+      display: block;
+    }
+    #p3 .overlay .img-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 10px;
+      width: 100%;
+      height: 100%;
+      align-content: center;
+    }
+    #p3 .overlay .img-grid img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 4px;
+    }
+
+    /* Clickable images in overlays */
+    #p3 .overlay img {
+      cursor: zoom-in;
+    }
+
+    /* Lightbox for image zoom */
+    .img-lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      cursor: zoom-out;
+    }
+    .img-lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 4px;
+      box-shadow: 0 0 40px rgba(0,0,0,0.5);
+    }
+
+    /* Education page styles */
+    #p5 .edu-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      padding: 40px 80px 40px 120px;
+      overflow-y: auto;
+    }
+    #p5 .edu-title {
+      font-size: 48px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      margin-bottom: 40px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    #p5 .edu-card {
+      background: rgba(255,255,255,0.08);
+      border-left: 4px solid #4fc3f7;
+      padding: 30px 35px;
+      margin-bottom: 25px;
+      width: 100%;
+      max-width: 700px;
+      border-radius: 0 8px 8px 0;
+    }
+    #p5 .edu-card h3 {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 0 0 5px 0;
+      color: #4fc3f7;
+    }
+    #p5 .edu-card .edu-date {
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 12px;
+    }
+    #p5 .edu-card p {
+      font-size: 16px;
+      line-height: 1.6;
+      margin: 0;
+      color: rgba(255,255,255,0.9);
+    }
+    #p5 .edu-skills {
+      margin-top: 30px;
+      width: 100%;
+      max-width: 700px;
+    }
+    #p5 .edu-skills h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #4fc3f7;
+      margin-bottom: 12px;
+    }
+    #p5 .edu-skills p {
+      font-size: 15px;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.85);
+    }
+
+
   </style>
 </head>
 
 <body>
-  <!-- Top-level containers for “pages” -->
+  <!-- Top-level containers for "pages" -->
   <div class="ct" id="t1">
-    <div class="ct" id="t2">
-      <div class="ct" id="t3">
-        <div class="ct" id="t4">
+    <div class="ct" id="t5">
+      <div class="ct" id="t2">
+        <div class="ct" id="t6">
+          <div class="ct" id="t3">
+            <div class="ct" id="t4">
 
           <!-- Nav menu -->
           <ul id="menu">
-            <a href="#t1"><li class="icon fa fa-bolt" id="uno" style="font-size:24px;"> <br> HOME</li></a>
-            <a href="#t2"><li class="icon fa fa-keyboard-o" id="dos" style="font-size:24px;"><br> WORK</li></a>
-            <a href="#t3"><li class="icon fa fa-rocket" id="tres" style="font-size:24px;"> PROJECTS</li></a>
-            <a href="#t4"><li class="icon fa fa-dribbble" id="cuatro" style="font-size:24px;"> CONTACT</li></a>
+            <a href="#t1"><li class="icon fa fa-bolt" id="uno" style="font-size:20px;"> <br> HOME</li></a>
+            <a href="#t5"><li class="icon fa fa-graduation-cap" id="cinco" style="font-size:20px;"><br> EDUCATION</li></a>
+            <a href="#t2"><li class="icon fa fa-keyboard-o" id="dos" style="font-size:20px;"><br> WORK</li></a>
+            <a href="#t6"><li class="icon fa fa-users" id="seis" style="font-size:20px;"><br> EXTRA</li></a>
+            <a href="#t3"><li class="icon fa fa-rocket" id="tres" style="font-size:20px;"> PROJECTS</li></a>
+            <a href="#t4"><li class="icon fa fa-dribbble" id="cuatro" style="font-size:20px;"> CONTACT</li></a>
           </ul>
 
-          <!-- PAGE 1: “Home” -->
+          <!-- PAGE 1: "Home" -->
           <div class="page" id="p1">
             <section>
               <div class="content">
@@ -1116,9 +1335,46 @@ hr {
             </section>
           </div>
 
-          <!-- PAGE 2: “Work” (5 sliding panels) -->
+          <!-- PAGE 5: "Education" -->
+          <div class="page" id="p5">
+            <div class="edu-container">
+              <h1 class="edu-title">Education</h1>
+              <div class="edu-card">
+                <h3>University of Toronto (SC) | Management Co-op</h3>
+                <div class="edu-date">September 2023 &ndash; 2027 (Expected)</div>
+                <p>
+                  <strong>Double Degree:</strong> Bachelor of Science (BSc) in Statistics and Bachelor of Business Administration (BBA) in Finance
+                </p>
+              </div>
+              <div class="edu-card">
+                <h3>C&eacute;gep | John Abbott College, Montr&eacute;al</h3>
+                <div class="edu-date">August 2022 &ndash; June 2023</div>
+                <p>
+                  Honors Commerce, General Social Science<br>
+                  R-score: 33 (GPA 4.0)
+                </p>
+              </div>
+              <div class="edu-skills">
+                <h3>Summary of Qualifications</h3>
+                <p>
+                  <strong>Data Analysis &amp; Reporting Tools:</strong> Used Excel, SQL, and Power BI to clean, analyze, and visualize financial data, supporting quarterly reporting, variance analysis, and performance optimization in high-volume data environments.<br><br>
+                  <strong>Budgeting &amp; Forecasting Support:</strong> Built financial templates and assumptions using Excel and R, improving forecast accuracy and supporting strategic decision-making on monthly expenditures, capital allocation, and resource planning processes.<br><br>
+                  <strong>Data Analysis &amp; Integrity:</strong> Analyzed large, high-volume financial and data projects using Python, SQL, and R, ensuring data accuracy, consistency, and integrity while identifying trends, variances, and performance insights.<br><br>
+                  <strong>Cross-Functional Collaboration:</strong> Collaborated with finance, operations, and project teams to collect cost data, clarify account treatments, and deliver actionable reporting improvements through communication and analytical thinking.
+                </p>
+              </div>
+              <div class="edu-skills">
+                <h3>Technical Skills</h3>
+                <p>
+                  <strong>Languages:</strong> English (Native), Mandarin (Native), and French (DELF-B2 certificate)<br>
+                  <strong>Certifications &amp; Tools:</strong> CPA Student Ontario, Advanced Excel (CFI), Microsoft Utilities, Power BI, Python, R, LaTeX, SQL
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- PAGE 2: "Work" (5 sliding panels) -->
           <div class="page" id="p2">
-            <div style="color: rgba(255, 255, 255, 0.708);transform:translateY(550px) translateX(100px);z-index:1111111;position:absolute;">Hover to show details</div>
             <main class="panel-container">
               <section>
                 <article>
@@ -1131,7 +1387,6 @@ hr {
                   -1px 0px 0 black,
                   0px 1px 0 black,
                   0px -1px 0 black;"></h2>
-                  <!-- <h2>Hover <br>to view <br>work details <br> <br><br><br> my skills: <br> aaa <br> bbb <br>ccc <br> ddd</h2> -->
                   <p></p>
                 </article>
               </section>
@@ -1155,9 +1410,9 @@ hr {
                   -1px 0px 0 black,
                   0px 1px 0 black,
                   0px -1px 0 black">Sep 2025 - May 2026
-					  • Delivered financial, profitability, POV and workforce reports supporting Scotiabank, CIBC, TD, Insurance, RBC and CMI teams with 98%+ on-time delivery across 30+ stakeholders
-					  <br>• Led CPI contract analysis across 40+ companies and 130+ contracts using Power BI and Excel, supporting recovery of 3%+ previously unrecognized revenue
-					  <br>• Documented reporting logic and invoice workflows across Coupa, PSA, Beeline, Talento, Aeros and MWS, implementing Python automation eliminating 50+ manual errors
+					  • Designed and delivered financial, profitability, POV, and workforce reports supporting Scotiabank, CIBC, TD, Insurance, RBC, and CMI teams concurrently, achieving over 98% on-time delivery rate under tight deadlines while maintaining high accuracy and satisfaction across 30+ client and internal stakeholders.
+					  <br>• Led CPI contract analysis across 40+ companies and 130+ historical contracts, leveraging Power BI and Excel to validate pricing logic, CPI issuance, and billing accuracy through cross-functional collaboration, supporting recovery of over 3% in previously unrecognized revenue.
+					  <br>• Documented reporting logic, invoice workflows, and large-scale workforce data (700+ employees) across multiple systems (Coupa, PSA, Beeline, Talento, Aeros, MWS), and implemented Python automation to eliminate over 50 manual processing errors.
 				  </p>
                 </article>
               </section>
@@ -1179,12 +1434,9 @@ hr {
                   -1px 0px 0 black,
                   0px 1px 0 black,
                   0px -1px 0 black">Aug 2024 - Dec 2025
-					• Negotiated price and cooperation with 30+ clothing manufacturers to secure optimal monthly suppliers, which helped
-                    strengthen the supply chain
-                    <br>• Conducted detailed cost and profit analysis for each item, optimizing Excel table functions and data modeling to optimize
-                    pricing strategies
-                    <br>• Proficiently utilized search engines and optimized online platforms to drive e-commerce sales by analyzing consumer trends
-                    and collecting data from statistics and Google Trends to create distribution graphs</p>
+					• Conducted detailed cost-profit analysis, leveraging Python and SQL Query for advanced data modeling, automating processes, and improving operational efficiency through Excel-based data pipelines.
+                    <br>• Optimized online platforms by analyzing consumer trends and visualizing performance data with distribution graphs and behavioral insights in Power BI to support data-driven product selection decisions, resulting in a 30% increase in sales and a 40% reduction in inventory backlog.
+                    <br>• Negotiated long-term partnerships with suppliers, reducing procurement costs by 35% through strategic negotiation and collaboration.</p>
                 </article>
               </section>
               <section>
@@ -1205,9 +1457,9 @@ hr {
                   -1px 0px 0 black,
                   0px 1px 0 black,
                   0px -1px 0 black">July 2022 - August 2023
-					  • Performed cost analysis using R, generating visual insights for budgeting and planning
-					  <br>• Managed payroll, AP/AR and tax compliance in Excel, reducing processing time by 24%
-					  <br>• Prepared financial statements and analyzed cash flow, margins and CVP metrics</p>
+					  • Performed cost analysis and report using R-code, generating clear visual insights to support budget planning and resource allocation.
+					  <br>• Managed financial records, payroll processing, and accounts payable/receivable, ensuring compliance with tax regulation using Excel, ensuring accurate reporting and reducing processing time by 24%.
+					  <br>• Prepared financial statements and analyzed cash flow, gross margin, and CVP metrics to support profitability and cost control decisions.</p>
                 </article>
               </section>
               <section>
@@ -1220,81 +1472,279 @@ hr {
             <button>Toggle images</button>
           </div>
 
-          <!-- PAGE 3: “Projects” -->
+          <!-- PAGE 6: "Extracurricular" (5 sliding panels) -->
+          <div class="page" id="p6">
+            <main class="panel-container">
+              <section>
+                <article>
+                  <h2 style="font-weight:bolder;transform:translateX(40px) translateY(180px); font-size:28px; text-shadow:
+                  1px 1px 0 black,
+                  -1px 1px 0 black,
+                  1px -1px 0 black,
+                  -1px -1px 0 black,
+                  1px 0px 0 black,
+                  -1px 0px 0 black,
+                  0px 1px 0 black,
+                  0px -1px 0 black;"></h2>
+                  <p></p>
+                </article>
+              </section>
+              <section>
+                <article>
+                  <h2 style="padding-left:12px;padding-right:500px;background:rgba(0, 0, 0, 0.489);font-weight:bolder;color:rgb(255, 255, 255);transform:translateX(0px) translateY(0px);text-align: center; text-shadow:
+                  1px 1px 0 black,
+                  -1px 1px 0 black,
+                  1px -1px 0 black,
+                  -1px -1px 0 black,
+                  1px 0px 0 black,
+                  -1px 0px 0 black,
+                  0px 1px 0 black,
+                  0px -1px 0 black;">Vice-President:<br>
+                  Infinite Aperture Club</h2>
+                  <p style="color:rgb(255, 255, 255);text-shadow:1px 1px 0 black,
+                  -1px 1px 0 black,
+                  1px -1px 0 black,
+                  -1px -1px 0 black,
+                  1px 0px 0 black,
+                  -1px 0px 0 black,
+                  0px 1px 0 black,
+                  0px -1px 0 black">Aug 2024 - Current
+                    • Sponsored and launched a photography club by analyzing student interests and needs through mind mapping, attracting over 100 members.
+                    <br>• Collected and managed 500+ student interest records using marketing tools and Microsoft utilities, coordinating recruitment, outreach communications and organizing associate teams to support club onboarding and operations.
+                  </p>
+                </article>
+              </section>
+              <section>
+                <article>
+                  <h2 style="background:rgba(0, 0, 0, 0.489);padding-left:12px;font-weight:bolder;transform:translateX(30px) translateY(420px);color:rgb(255, 255, 255);text-shadow:1px 1px 0 black,
+                  -1px 1px 0 black,
+                  1px -1px 0 black,
+                  -1px -1px 0 black,
+                  1px 0px 0 black,
+                  -1px 0px 0 black,
+                  0px 1px 0 black,
+                  0px -1px 0 black">Marketing Associate: <br> UofT Venture Club</h2>
+                  <p style="color:rgb(255, 255, 255);text-shadow:1px 1px 0 black,
+                  -1px 1px 0 black,
+                  1px -1px 0 black,
+                  -1px -1px 0 black,
+                  1px 0px 0 black,
+                  -1px 0px 0 black,
+                  0px 1px 0 black,
+                  0px -1px 0 black">Oct 2023 - July 2024
+                    • Researched AI and new energy trends, leveraging data-driven analysis to support strategic planning by evaluating the information timeliness and depth, and cross-verifying from multiple perspectives to ensure authenticity for strategic planning.
+                    <br>• Utilized Python and SQL for data collection and large-scale data processing and applied Excel for visualization and modeling to optimize club operations, enhancing organizational planning and the efficiency of group discussion.</p>
+                </article>
+              </section>
+              <section>
+                <article>
+                  <h2 style="background:rgba(0, 0, 0, 0.489);padding-left:12px;padding-right:500px;font-weight:bolder;transform:translateX(-10px) translateY(0px);color:rgb(255, 255, 255);text-shadow:1px 1px 0 black,
+                  -1px 1px 0 black,
+                  1px -1px 0 black,
+                  -1px -1px 0 black,
+                  1px 0px 0 black,
+                  -1px 0px 0 black,
+                  0px 1px 0 black,
+                  0px -1px 0 black">TA of Calculus<br>C&eacute;gep, John Abbott</h2>
+                  <p style="color:rgb(255, 255, 255);text-shadow:1px 1px 0 black,
+                  -1px 1px 0 black,
+                  1px -1px 0 black,
+                  -1px -1px 0 black,
+                  1px 0px 0 black,
+                  -1px 0px 0 black,
+                  0px 1px 0 black,
+                  0px -1px 0 black">Jan 2023 - May 2023
+                    • Provided academic support in calculus through concept explanation and problem-solving, leveraging 3 years of experience as a volunteer tutor.
+                    <br><br>Competitions & Achievements:
+                    <br>• E-commerce Shop - Whimsy Day Studio (Jan 2025 - Current)
+                    <br>• Model United Nations - HNMUN, SSUN, CONUN (June 2019 - Current)
+                    <br>• Investment Trading Competition (Oct 2024)
+                    <br>• Concours D&eacute;bats Oratoires (March 2023)</p>
+                </article>
+              </section>
+              <section>
+                <article>
+                  <h2></h2>
+                  <p></p>
+                </article>
+              </section>
+            </main>
+          </div>
+
+          <!-- PAGE 3: "Projects" -->
           <div class="page" id="p3">
             <div>
                 <div class="grid">
-                    <!--Left side-->
-                    <div id="west" class="column effect-hover">
-                      <div class="content">
-                        <i class="fa fa-desktop" aria-hidden="true"></i>
-                        
-                        <h2>Coding Projects <span>Open</span></h2>
-                        <h3>Python, R <br>
-                            Power BI</h3>
+                    <!-- Row 1 -->
+                    <div id="proj-python" class="column effect-hover" style="background: #1e1e1e;">
+                      <div class="content" style="background: rgba(30,30,30,0.7);">
+                        <i class="fa fa-code" aria-hidden="true"></i>
+                        <h2>Python <span>Open</span></h2>
+                        <h3>Matrix Search Algorithm</h3>
                         <p>view project detail</p>
-                      </div>		    
+                      </div>
                     </div>
-                    <!--Right side-->
-                    <div id="east" class="column effect-hover">
-                      <div class="content">
-                        
-                        <i class="fa fa-credit-card" aria-hidden="true"> </i>
-                        
-                        <h2>Finance Projects <span>Open</span></h2>
-                        <h3>Experienced in... <br> ........</h3>
+                    <div id="proj-r" class="column effect-hover" style="background: #2c5f8a;">
+                      <div class="content" style="background: rgba(44,95,138,0.7);">
+                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                        <h2>R Analysis <span>Open</span></h2>
+                        <h3>Data Visualization</h3>
                         <p>view project detail</p>
-                      </div>			
+                      </div>
                     </div>
-                    <!--Logo-->
-                    <div class="logo">
-                      <!-- <a href="http://webdesignerwall.com/tutorials/lively-splitscreen-layout-css3-animations" target="_blank">View Tutorial</a> -->
-                      <!-- <img src="https://assets.codepen.io/927610/logo24w.png" /> -->
-                      </a>
+                    <div id="proj-bi" class="column effect-hover" style="background: #3b1a3b;">
+                      <div class="content" style="background: rgba(59,26,59,0.7);">
+                        <i class="fa fa-line-chart" aria-hidden="true"></i>
+                        <h2>Power BI <span>Open</span></h2>
+                        <h3>Football Analytics</h3>
+                        <p>view project detail</p>
+                      </div>
                     </div>
-                    
+                    <!-- Row 2 -->
+                    <div id="proj-sql" class="column effect-hover" style="background: #1a3320;">
+                      <div class="content" style="background: rgba(26,51,32,0.7);">
+                        <i class="fa fa-database" aria-hidden="true"></i>
+                        <h2>SQL <span>Open</span></h2>
+                        <h3>Machine Data Query</h3>
+                        <p>view project detail</p>
+                      </div>
+                    </div>
+                    <div id="proj-excel" class="column effect-hover" style="background: #1a3a5c;">
+                      <div class="content" style="background: rgba(26,58,92,0.7);">
+                        <i class="fa fa-certificate" aria-hidden="true"></i>
+                        <h2>CFI Excel <span>Open</span></h2>
+                        <h3>Data Analysis Certification</h3>
+                        <p>view certificate</p>
+                      </div>
+                    </div>
+                    <div class="column" style="background: #222; cursor:default;">
+                      <div class="content" style="background: rgba(34,34,34,0.9);">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        <h2>More <span>Soon</span></h2>
+                        <p>projects coming soon</p>
+                      </div>
+                    </div>
                   </div>
-                  
-                  <!--Left side content-->
-                  <div id="west-overlay" class="overlay">
-                       <div class="grid">      
-                         <div class="column">
-                           <img src="image15.jfif">
-                         </div>       
-                          <div class="column">  
+
+                  <!-- Python overlay (side-by-side images) -->
+                  <div id="proj-python-overlay" class="overlay">
+                       <div class="grid">
+                         <div class="column" style="overflow-y:auto; align-items:flex-start;">
+                           <div class="img-grid">
+                             <img src="python1.png">
+                             <img src="python2.png">
+                           </div>
+                         </div>
+                          <div class="column">
                             <div class="product-content">
-                               <h1>CODING RELATED PROJECTS</h1>
-                              <p>I am familiar with Python, R, Power BI, HTML,CSS, and JS. </p>
-                              
-                              <div class="size-guide-link underline-link">Some project details...</div>
+                               <h1>PYTHON MATRIX SEARCH ALGORITHM</h1>
+                              <p>Implemented matrix pattern-matching functions including validate_coordinates and search_diagonals. The algorithm searches for number sequences across rows, columns, and diagonals in a 2D matrix, validating coordinate boundaries and directional traversal.</p>
+                              <br>
+                              <p><strong>Skills:</strong> Python, Algorithm Design, Matrix Operations, Doctest</p>
                             </div>
-                         </div>         
-                       </div><!--End Grid-->
-                    
+                         </div>
+                       </div>
                        <div class="close-icon">
                           <div></div>
                           <div></div>
-                        </div> 
+                        </div>
                   </div>
-                  <!--Right side content-->
-                  <div id="east-overlay" class="overlay">
-                       <div class="grid">      
+
+                  <!-- R overlay -->
+                  <div id="proj-r-overlay" class="overlay">
+                       <div class="grid">
                          <div class="column">
-                           <img src="image15.jfif">
-                         </div>       
-                          <div class="column">  
+                           <img src="R.png">
+                         </div>
+                          <div class="column">
                             <div class="product-content">
-                               <h1>Finance projects</h1>
-                              <p>project details explained... <br>replaces images on the left. <br> some more details</p>
-                              
-                         </div>         
-                       </div><!--End Grid-->
-                    
+                               <h1>R DATA VISUALIZATION</h1>
+                              <p>Analyzed the effect of machine quantity on bottling time using R. Created a barplot visualizing how increasing the number of machines reduces total production time per 4 bottles from 20 minutes down to 2 minutes.</p>
+                              <br>
+                              <p><strong>Skills:</strong> R, barplot(), Statistical Analysis, Data Visualization</p>
+                            </div>
+                         </div>
+                       </div>
                        <div class="close-icon">
                           <div></div>
                           <div></div>
-                        </div> 
+                        </div>
                   </div>
+
+                  <!-- Power BI overlay (4 images in grid) -->
+                  <div id="proj-bi-overlay" class="overlay">
+                       <div class="grid">
+                         <div class="column" style="overflow-y:auto; align-items:flex-start;">
+                           <div class="img-grid">
+                             <img src="powerbi.png">
+                             <img src="powerbi1.png">
+                             <img src="powerbi2.png">
+                             <img src="powerbi3.png">
+                           </div>
+                         </div>
+                          <div class="column">
+                            <div class="product-content">
+                               <h1>POWER BI - PREMIER LEAGUE ANALYTICS</h1>
+                              <p>Built an interactive Power BI dashboard analyzing Premier League football data (2017-2022). Visualized player performance metrics including total goals scored, average age by position, age vs time on field, and top scorers.</p>
+                              <br>
+                              <p><strong>Key Insights:</strong></p>
+                              <p>6,091 total goals since 2017</p>
+                              <p>25.32 average player age</p>
+                              <p>Top scorers: Salah, Kane, Vardy</p>
+                              <br>
+                              <p><strong>Skills:</strong> Power BI, Data Modeling, DAX, Data Visualization</p>
+                            </div>
+                         </div>
+                       </div>
+                       <div class="close-icon">
+                          <div></div>
+                          <div></div>
+                        </div>
+                  </div>
+
+                  <!-- SQL overlay -->
+                  <div id="proj-sql-overlay" class="overlay">
+                       <div class="grid">
+                         <div class="column">
+                           <img src="sql.png">
+                         </div>
+                          <div class="column">
+                            <div class="product-content">
+                               <h1>SQL - MACHINE CONDITION MONITORING</h1>
+                              <p>Wrote SQL subqueries to extract the latest spindle condition and its recorded timestamp from machine monitoring tables. The query filters by machine name and orders by time to retrieve the most recent non-null condition entry.</p>
+                              <br>
+                              <p><strong>Skills:</strong> SQL, Subqueries, Data Filtering, ORDER BY, LIMIT</p>
+                            </div>
+                         </div>
+                       </div>
+                       <div class="close-icon">
+                          <div></div>
+                          <div></div>
+                        </div>
+                  </div>
+
+                  <!-- Excel certification overlay -->
+                  <div id="proj-excel-overlay" class="overlay">
+                       <div class="grid">
+                         <div class="column">
+                           <img src="certification.jpg">
+                         </div>
+                          <div class="column">
+                            <div class="product-content">
+                               <h1>CFI - FUNDAMENTALS OF DATA ANALYSIS IN EXCEL</h1>
+                              <p>Completed the Corporate Finance Institute certification in Fundamentals of Data Analysis in Excel, covering advanced spreadsheet techniques, data cleaning, pivot tables, and financial modeling.</p>
+                              <br>
+                              <p><strong>Certificate #:</strong> 91660199</p>
+                              <p><strong>Issued:</strong> January 9, 2024</p>
+                            </div>
+                         </div>
+                       </div>
+                       <div class="close-icon">
+                          <div></div>
+                          <div></div>
+                        </div>
+                  </div>
+
                   <script src="index.js"></script>
             </div>
           </div>
@@ -1303,8 +1753,8 @@ hr {
   
 
         </div>
-        <!-- PAGE 4: “Contact” -->
-          <!-- PAGE 4: “Contact” -->
+        <!-- PAGE 4: "Contact" -->
+          <!-- PAGE 4: "Contact" -->
           <div class="page" id="p4">
             <section id="contact">
   
@@ -1377,6 +1827,8 @@ hr {
         </div>
       </div>
     </div>
+  </div>
+  </div>
   </div>
 
   <!-- Simple script to toggle .hide-images on the <body> -->
